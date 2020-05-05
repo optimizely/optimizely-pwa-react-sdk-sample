@@ -1,4 +1,4 @@
-## Available Scripts
+## Optimizely React SDK PWA Samples
 
 In the project directory, you can run:
 
