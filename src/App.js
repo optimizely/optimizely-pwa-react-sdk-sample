@@ -1,21 +1,38 @@
 import React from 'react';
-import { createInstance } from '@optimizely/react-sdk';
+import { 
+  createInstance,
+  OptimizelyProvider,
+  OptimizelyExperiment,
+  OptimizelyVariation,
+} from '@optimizely/react-sdk';
 import './App.css';
 
-function App() {
-  const optimizely = createInstance({
-    datafile: window.optimizelyDatafile,
-  });
-  const optimizelyConfig = optimizely.getOptimizelyConfig();
-  return (
-    <div className="App">
-      <header className="App-header">
-        <p>
-          Revision: {optimizelyConfig.revision}
-        </p>
-      </header>
-    </div>
-  );
-}
+export default class App extends React.Component {
+  constructor(props) {
+    super(props);
+    this.optimizely = createInstance({
+      sdkKey: 'QMVJcUKEJZFg8pQ2jhAybK',
+    });
+  }
 
-export default App;
+  render() {
+    return (
+      <OptimizelyProvider
+        optimizely={ this.optimizely }
+        timeout={ 3000 }
+        user={ { id: 'user1' } }>
+        <div className="App">
+          <header className="App-header">
+            <p>
+              <OptimizelyExperiment experiment='11357634981'>
+                <OptimizelyVariation variation="11359384126">
+                  variation: My Variation
+                </OptimizelyVariation>
+              </OptimizelyExperiment>
+            </p>
+          </header>
+        </div>
+      </OptimizelyProvider>
+    );
+  }
+}
